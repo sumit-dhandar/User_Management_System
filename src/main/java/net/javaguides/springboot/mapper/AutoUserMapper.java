@@ -13,6 +13,7 @@ public interface AutoUserMapper {
     //as we have same so we are not using these
 
     AutoUserMapper Mapper = Mappers.getMapper(AutoUserMapper.class);
+
     UserDto mapToUserDto(User user);
 
     User mapToUser(UserDto userDto);
