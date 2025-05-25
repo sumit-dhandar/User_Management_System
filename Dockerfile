@@ -1,7 +1,7 @@
 
 FROM eclipse-temurin:17
 
-LABEL mentainer="sumitsdhandar@gmail.com"
+LABEL maintainer="sumitsdhandar@gmail.com"
 
 WORKDIR /user/app
 

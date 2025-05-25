@@ -1,32 +1,49 @@
 version: "3.8"
 
 services:
+
+  # 🔹 MySQL Service
   mysqldb:
     container_name: mysqldb
-    image: mysql
+    image: mysql:8.0
+    restart: always
     environment:
-      DATABASE_HOST: docker-mysql
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: user_management
-      DATABASE_PORT: 3306
-      MYSQL_PASSWORD: root
+    ports:
+      - "3308:3306"  # Host:Container (use 3308 to avoid conflicts)
     networks:
-      springboot-mysql-net:
+      - springboot-mysql-net
+    volumes:
+      - mysql-data:/var/lib/mysql  # ✅ persist MySQL data
 
+  # 🔹 Spring Boot App Service
   springboot-restful-webservices:
     container_name: springboot-restful-webservices
-    image: springboot-rest-webservices:0.0.3
+    build:
+      context: .
+      dockerfile: Dockerfile
     ports:
       - "8080:8080"
-    environment:
-        spring_datasource_url: jdbc:mysql://mysqldb:3306/user_management
-        spring_datasource_username: root
-        spring_datasource_password: root
     depends_on:
       - mysqldb
-    networks:
-      springboot-mysql-net:
-    restart: on-failure
 
+    restart: on-failure
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysqldb:3306/user_management
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: root
+      SPRING_DATASOURCE_HIKARI_INITIALIZATION-FAIL-TIMEOUT: 60000
+      SPRING_DATASOURCE_HIKARI_CONNECTION-TIMEOUT: 60000
+
+
+    networks:
+      - springboot-mysql-net
+
+# 🔗 Shared network
 networks:
-  springboot-mysql-net:
+  springboot-mysql-net: {}
+
+# 💾 Named volume for persistent MySQL data
+volumes:
+  mysql-data:
