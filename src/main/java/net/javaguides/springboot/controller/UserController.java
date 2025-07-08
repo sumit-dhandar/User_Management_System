@@ -56,8 +56,8 @@ public class UserController {
              description = "HTTP  Status 200 SUCCESS"
      )
 @GetMapping("{id}")
-    public ResponseEntity<UserDto> getUsereById(@PathVariable("id") Long userId){
-        UserDto user = userService.getUerById(userId);
+    public ResponseEntity<UserDto> getUserById(@PathVariable("id") Long userId){
+        UserDto user = userService.getUserById(userId);
         return new ResponseEntity<>(user,HttpStatus.OK);
     }
 

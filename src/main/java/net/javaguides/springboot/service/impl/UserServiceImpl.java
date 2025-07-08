@@ -1,5 +1,6 @@
 package net.javaguides.springboot.service.impl;
 
+
 import lombok.AllArgsConstructor;
 import net.javaguides.springboot.dto.UserDto;
 import net.javaguides.springboot.entity.User;
@@ -10,6 +11,7 @@ import net.javaguides.springboot.mapper.UserMapper;
 import net.javaguides.springboot.repository.UserRepository;
 import net.javaguides.springboot.service.UserService;
 import org.modelmapper.ModelMapper;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -67,7 +69,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDto getUerById(Long userId) {
+    // Cache the result of this method with the key 'itemList'
+    @Cacheable(value = "users", key = "#userId")
+    public UserDto getUserById(Long userId) {
 //        Optional<User> optionalUser = userRepository.findById(userId);
         User user = userRepository.findById(userId).orElseThrow(() -> new ResourceNotFoundException("User","id",userId)
         );
