@@ -89,6 +89,10 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-cache</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
     </dependencies>
 
     <build>
@@ -132,6 +136,7 @@
                 </configuration>
             </plugin>
         </plugins>
+        <finalName>devops-integration</finalName>
     </build>
 
 </project>
