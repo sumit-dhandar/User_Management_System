@@ -17,7 +17,7 @@ import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
-//to enable method level security
+//to enable method level security so only ADMIN can access POST,PUT & DELETE endpoint
 @EnableMethodSecurity
 public class SecurityConfig {
 
